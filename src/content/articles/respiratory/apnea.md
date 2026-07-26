@@ -2,6 +2,7 @@
 title: 'آپنه'
 description: 'یک اختلال تنفسی مرتبط با خواب است که ناشی از فروپاشی مکرر راه هوایی فوقانی در هنگام خواب'
 category: 'Respiratory'
+cover: '/images/apnea.png'
 synonyms:
   - 'Sleep Apnea'
   - 'Apnea'

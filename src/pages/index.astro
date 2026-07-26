@@ -17,7 +17,7 @@ const totalArticles = all.length;
 const totalCategories = groups.size;
 
 // "Featured" — pick the article with a cover image if any, else the first.
-const featured = all.find((a) => a.data.cover) ?? all[0];
+const featured = all.find((a) => a.data.featured) ?? all[0];
 
 // "Recently added" — last 5 articles by sort order
 const recent = [...all].reverse().slice(0, 5);

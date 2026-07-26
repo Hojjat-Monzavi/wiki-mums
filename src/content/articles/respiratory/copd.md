@@ -7,6 +7,8 @@ synonyms:
   - 'Chronic bronchitis'
   - 'Emphysema'
 lastUpdated: 2026-07-26
+cover: '/images/COPD.jpg'
+featured: 'True'
 seeAlso:
   - /articles/respiratory/asthma
   - /articles/respiratory/pneumonia

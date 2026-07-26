@@ -9,7 +9,7 @@ interface Props {
   title?: string;
 }
 
-const { paths, title = 'See also' } = Astro.props;
+const { paths, title = 'همچنین ببینید' } = Astro.props;
 const entries: ArticleEntry[] = await getArticlesByPaths(paths);
 ---
 

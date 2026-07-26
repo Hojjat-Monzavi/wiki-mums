@@ -6,6 +6,7 @@ const articles = defineCollection({
     title: z.string(),
     description: z.string(),
     category: z.string(),
+    featured: z.string().optional(),
     synonyms: z.array(z.string()).optional(),
     lastUpdated: z.coerce.date().optional(),
     // optional manual ordering hint within a category; default is alphabetic by path
