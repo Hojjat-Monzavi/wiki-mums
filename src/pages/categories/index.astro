@@ -1,4 +1,4 @@
----
+﻿---
 import Base from '../../layouts/Base.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import {
@@ -14,16 +14,16 @@ const sortedSlugs = [...groups.keys()].sort();
 const totalArticles = [...groups.values()].reduce((n, g) => n + g.length, 0);
 ---
 
-<Base title="Categories" description="All categories on MedWiki.">
+<Base title="Categories" description="All categories on WikiMUMS.">
   <div class="page">
     <Sidebar />
 
     <main class="main" id="main">
       <h1 class="page-title">All categories</h1>
       <p class="lead">
-        MedWiki organises {totalArticles} articles across {sortedSlugs.length} medical
-        specialties. Pick a category below to browse its full article list — articles within
-        each category are listed in alphabetic order on the category page.
+        WikiMUMS شامل {totalArticles} مقاله در {sortedSlugs.length} تخصص پزشکی است.
+        یکی از دسته‌بندی‌های زیر را برای مشاهده فهرست کامل مقالات انتخاب کنید.
+        مقالات هر دسته‌بندی به ترتیب الفبا در صفحه مربوط به آن قرار دارند.
       </p>
 
       <div class="category-grid category-grid--large">
@@ -37,10 +37,10 @@ const totalArticles = [...groups.values()].reduce((n, g) => n + g.length, 0);
                 <h2 class="category-card--large__title">
                   <a href={withBase(`/categories/${slug}`)}>{humanize(slug)}</a>
                 </h2>
-                <span class="category-card--large__count">{items.length} articles</span>
+                <span class="category-card--large__count">{items.length} جستار</span>
               </div>
               <p class="category-card--large__desc">
-                {CATEGORY_DESCRIPTIONS[slug] ?? 'Articles in this specialty.'}
+                {CATEGORY_DESCRIPTIONS[slug] ?? 'جستارهای این دسته'}
               </p>
               <ul class="category-card--large__preview">
                 {preview.map((entry) => (

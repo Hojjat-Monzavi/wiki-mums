@@ -1,4 +1,4 @@
----
+﻿---
 import Base from '../layouts/Base.astro';
 import Sidebar from '../components/Sidebar.astro';
 import ArticleCard from '../components/ArticleCard.astro';
@@ -23,35 +23,35 @@ const featured = all.find((a) => a.data.cover) ?? all[0];
 const recent = [...all].reverse().slice(0, 5);
 ---
 
-<Base title="MedWiki" description="A free, open-access medical encyclopedia.">
+<Base title="WikiMUMS" description="A free, open-access medical encyclopedia.">
   <div class="page">
     <Sidebar />
 
     <main class="main" id="main">
-      <h1 class="page-title">Welcome to MedWiki</h1>
+      <h1 class="page-title">به ویکی مامز خوش آمدید!</h1>
       <p class="lead">
-        A free, open-access medical encyclopedia. Browse {totalArticles} articles across
-        {totalCategories} specialties — written in plain language and interlinked so you can
-        explore one topic at a time, the way you would on Wikipedia.
+        یک دانشنامه پزشکی آزاد با دسترسی رایگان. در میان {totalArticles} مقاله در {totalCategories} دسته بندی مختلف مطالعه کنید — 
+        نوشته‌شده به زبانی ساده و با لینک‌های داخلی متصل‌به‌هم، تا بتوانید به سادگی
+        موضوعات را یکی پس از دیگری بررسی و مطالعه کنید.
       </p>
 
-      <h2>Browse by category</h2>
+      <h2>دسته بندی ها</h2>
       <div class="category-grid">
         {[...groups.keys()].sort().map((slug) => (
           <a class="category-card" href={withBase(`/categories/${slug}`)}>
             <h3>{humanize(slug)}</h3>
-            <p>{CATEGORY_DESCRIPTIONS[slug] ?? 'Articles in this specialty.'}</p>
-            <small>{groups.get(slug)!.length} articles</small>
+            <p>{CATEGORY_DESCRIPTIONS[slug] ?? 'جستار های این دسته'}</p>
+            <small>{groups.get(slug)!.length} جستار</small>
           </a>
         ))}
       </div>
 
-      <h2>Recently added</h2>
+      <h2>جستار های تازه اضافه شده</h2>
       <ul class="article-list">
         {recent.map((entry) => <ArticleCard entry={entry} />)}
       </ul>
 
-      <h2>Featured article</h2>
+      <h2>جستار های گلچین</h2>
       {featured && (
         <ul class="article-list">
           <ArticleCard entry={featured} />

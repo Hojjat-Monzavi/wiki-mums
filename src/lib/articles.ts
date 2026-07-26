@@ -70,11 +70,11 @@ export function coverFor(entry: ArticleEntry): string {
 
 /** Default category descriptions for the UI. */
 export const CATEGORY_DESCRIPTIONS: Record<string, string> = {
-  cardiology: 'Heart and blood vessel disorders.',
-  neurology: 'Disorders of the brain, spinal cord and nerves.',
-  respiratory: 'Diseases of the lungs and airways.',
-  endocrinology: 'Hormonal and metabolic conditions.',
-  gastroenterology: 'Digestive system and liver diseases.',
+  'قلب و عروق': 'بیماری های قلب و عروق.',
+  'نولوژی': 'بیماری های مغز، نخاع و دستگاه عصبی',
+  'دستگاه تنفس': 'بیماری های ریه و دستگاه تنفسی',
+  'غدد': 'مشکلات هورمونی و غدد',
+  'گوارش': 'دستگاه گوارش و کبد',
 };
 
 /** Build a minimal search index entry for client-side search. */

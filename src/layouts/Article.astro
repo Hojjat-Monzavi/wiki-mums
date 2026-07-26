@@ -6,6 +6,8 @@ import TableOfContents from '../components/TableOfContents.astro';
 import RelatedArticles from '../components/RelatedArticles.astro';
 import { coverFor, type ArticleEntry } from '../lib/articles';
 import { withBase } from '../lib/base';
+import '@fontsource/vazirmatn';
+import '@fontsource/amiri';
 
 interface Props {
   entry: ArticleEntry;
@@ -37,8 +39,8 @@ const categoryHref = withBase(`/categories/${category.slug}`);
 
     <main class="main" id="main">
       <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Categories', href: '/categories' },
+        { label: 'خانه', href: '/' },
+        { label: 'دسته بندی ها', href: '/categories' },
         { label: category.name, href: `/categories/${category.slug}` },
         { label: title },
       ]} />
@@ -47,12 +49,12 @@ const categoryHref = withBase(`/categories/${category.slug}`);
         <h1>{title}</h1>
         {synonyms && synonyms.length > 0 && (
           <p class="article-meta">
-            <span>Also known as: <em>{synonyms.join(', ')}</em></span>
+            <span>اسامی دیگر: <em>{synonyms.join(', ')}</em></span>
           </p>
         )}
         <p class="article-meta">
           <span>📂 <a href={categoryHref}>{category.name}</a></span>
-          {updatedDate && <span>· Updated {updatedDate}</span>}
+          {updatedDate && <span>· بروزرسانی : {updatedDate}</span>}
         </p>
       </header>
 
@@ -61,12 +63,6 @@ const categoryHref = withBase(`/categories/${category.slug}`);
           <img src={heroImage} alt={`Illustration: ${title}`} />
         </figure>
       )}
-
-      <div class="disclaimer">
-        <strong>Medical disclaimer:</strong> This article is for educational purposes only and is not
-        a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice
-        of a qualified health provider with any questions about a medical condition.
-      </div>
 
       <article class="article-body">
         <Content />
@@ -78,7 +74,7 @@ const categoryHref = withBase(`/categories/${category.slug}`);
 
       {references && references.length > 0 && (
         <section class="references">
-          <h2>References</h2>
+          <h2>منابع</h2>
           <ol>
             {references.map((r) => <li>{r}</li>)}
           </ol>

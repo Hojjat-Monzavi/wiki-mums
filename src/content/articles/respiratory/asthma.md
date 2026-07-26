@@ -8,11 +8,13 @@ lastUpdated: 2025-03-22
 seeAlso:
   - /articles/respiratory/copd
   - /articles/respiratory/pneumonia
+  - /articles/respiratory/apnea
 references:
   - 'Global Initiative for Asthma (GINA). Global Strategy for Asthma Management and Prevention. 2024 update.'
 ---
 
 ## Overview
+
 
 **Asthma** is a chronic inflammatory disorder of the airways in which exposure to triggers produces bronchoconstriction, mucosal oedema and mucus production, leading to intermittent airflow obstruction. It affects approximately 300 million people worldwide and is the commonest chronic disease of childhood. The hallmark of asthma — distinguishing it from [COPD](/articles/respiratory/copd) — is that the airway obstruction is **reversible**, either spontaneously or with treatment.
 

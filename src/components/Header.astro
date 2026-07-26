@@ -1,21 +1,20 @@
----
+﻿---
 import { withBase } from '../lib/base';
 
 const nav = [
-  { label: 'Home', href: withBase('/') },
-  { label: 'Categories', href: withBase('/categories') },
-  { label: 'Random', href: withBase('/random') },
-  { label: 'About', href: withBase('/about') },
+  { label: 'صفحه اصلی', href: withBase('/') },
+  { label: 'دسته بندی ها', href: withBase('/categories') },
+  { label: 'مقاله تصادفی', href: withBase('/random') },
+  { label: 'درباره ما', href: withBase('/about') },
 ];
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a href={withBase('/')} class="brand" aria-label="MedWiki home">
+    <a href={withBase('/')} class="brand" aria-label="WikiMUMS home">
       <img src={withBase('/favicon.svg')} alt="" class="brand__logo" width="28" height="28" />
       <span class="brand__name">
-        MedWiki
-        <small>The free medical encyclopedia</small>
+        WikiMUMS
       </span>
     </a>
 
@@ -25,13 +24,13 @@ const nav = [
           type="search"
           name="q"
           id="header-search"
-          placeholder="Search articles, synonyms…"
-          aria-label="Search MedWiki"
+          placeholder="جست جو جستارها، بیماری ها و ..."
+          aria-label="Search WikiMUMS"
           autocomplete="off"
           aria-expanded="false"
           aria-controls="search-dropdown"
         />
-        <button type="submit">Search</button>
+        <button type="submit">جست جو</button>
       </form>
       <div
         id="search-dropdown"

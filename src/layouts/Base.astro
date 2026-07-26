@@ -1,8 +1,10 @@
----
+﻿---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { withBase } from '../lib/base';
+import '@fontsource/vazirmatn';
+import '@fontsource/amiri';
 
 interface Props {
   title: string;
@@ -11,12 +13,12 @@ interface Props {
 }
 
 const { title, description = 'A free, open medical encyclopedia.', bodyClass = '' } = Astro.props;
-const siteName = 'MedWiki';
+const siteName = 'WikiMUMS';
 const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fa"  dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,7 +28,6 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
     <title>{fullTitle}</title>
   </head>
   <body class={bodyClass}>
-    <a href="#main" class="skip-link">Skip to content</a>
     <Header />
     <slot />
     <Footer />

@@ -1,64 +1,57 @@
----
+﻿---
 import Base from '../layouts/Base.astro';
 import Sidebar from '../components/Sidebar.astro';
 ---
 
-<Base title="About" description="About MedWiki.">
+<Base title="درباره" description="درباره ویکی‌مامز (WikiMUMS).">
   <div class="page">
     <Sidebar />
 
     <main class="main" id="main">
-      <h1 class="page-title">About MedWiki</h1>
+      <h1 class="page-title">درباره WikiMUMS</h1>
 
       <p class="lead">
-        MedWiki is a free, open-access medical encyclopedia written in plain language for
-        patients, students and curious readers.
+        ویکی‌مامز (WikiMUMS) یک دانشنامه پزشکی آزاد با دسترسی رایگان است که به زبانی ساده برای
+        بیماران، دانشجویان و خوانندگان کنجکاو نوشته شده است.
       </p>
 
-      <h2>What this is</h2>
+      <h2>این پروژه چیست؟</h2>
       <p>
-        MedWiki is a small, static, encyclopedia-style website — modelled after Wikipedia in
-        spirit but focused exclusively on medicine. Every article lives at a stable URL based on
-        its file path, so linking between articles is predictable and durable. Articles are
-        grouped into medical specialties (Cardiology, Neurology, Respiratory, Endocrinology,
-        Gastroenterology) and the entire site is generated from Markdown and MDX files.
+        ویکی‌مامز یک وب‌سایت کوچک، استاتیک و به سبک دانشنامه است — که از نظر روحیه از ویکی‌پدیا
+        الگوبرداری شده اما منحصراً بر روی پزشکی تمرکز دارد. هر مقاله در یک آدرس اینترنتی (URL) پایدار بر اساس
+        مسیر فایل خود قرار دارد، بنابراین لینک‌دهی بین مقالات قابل پیش‌بینی و ماندگار است. مقالات
+        در تخصص‌های پزشکی (قلب و عروق، مغز و اعصاب، تنفس، غدد،
+        گوارش) دسته‌بندی شده‌اند و کل سایت از فایل‌های Markdown و MDX تولید می‌شود.
       </p>
       <p>
-        The project is intentionally minimalist. There is no JavaScript framework on the client,
-        no tracking, no comments and no advertisements. Pages render as plain HTML and CSS, with
-        one tiny inline script that powers the live search box.
-      </p>
-
-      <h2>How articles are organized</h2>
-      <p>
-        Articles live under <code>src/content/articles/&lt;category&gt;/&lt;article-slug&gt;.md</code>.
-        The first directory segment becomes the article's category; the file name becomes the
-        article's slug. The URL is simply <code>/articles/&lt;category&gt;/&lt;article-slug&gt;</code>,
-        and articles within each category are listed in alphabetic path order — the same order
-        they appear in the sidebar.
-      </p>
-      <p>
-        Each article's frontmatter declares its <code>title</code>, <code>description</code>,
-        <code>category</code>, optional <code>synonyms</code>, <code>lastUpdated</code> date and
-        optional <code>references</code>. Internal links use standard Markdown link syntax pointing
-        at the article's path, e.g. <code>[hypertension](/articles/cardiology/hypertension)</code>.
+        این پروژه عمداً به صورت مینیمالیستی طراحی شده است. هیچ فریم‌ورک جاوااسکریپتی در سمت کاربر وجود ندارد،
+        خبری از ردیابی، دیدگاه‌ها و تبلیغات نیست. صفحات به صورت HTML و CSS خالص رندر می‌شوند، همراه با
+        یک اسکریپت درون‌خطی (inline script) بسیار کوچک که کادر جستجوی زنده را فعال می‌کند.
       </p>
 
-      <h2>How to add an article</h2>
+      <h2>نحوه سازماندهی مقالات</h2>
+      <p>
+        مقالات در مسیر <code>src/content/articles/&lt;category&gt;/&lt;article-slug&gt;.md</code> قرار دارند.
+        اولین بخش از مسیر پوشه به دسته‌بندی مقاله تبدیل می‌شود؛ نام فایل نیز به
+        نام مستعار (slug) مقاله تبدیل می‌گردد. آدرس اینترنتی (URL) به سادگی به صورت <code>/articles/&lt;category&gt;/&lt;article-slug&gt;</code> است،
+        و مقالات در هر دسته‌بندی به ترتیب الفبایی مسیر لیست می‌شوند — همان ترتیبی که
+        در نوار کناری (Sidebar) ظاهر می‌شوند.
+      </p>
+      <p>
+        فرانت‌متر (frontmatter) هر مقاله شامل <code>title</code>، <code>description</code>،
+        <code>category</code>، موارد اختیاری <code>synonyms</code> (مترادف‌ها)، تاریخ <code>lastUpdated</code> و
+        <code>references</code> (منابع) اختیاری است. لینک‌های داخلی از سنتکس استاندارد لینک در Markdown با اشاره
+        به مسیر مقاله استفاده می‌کنند، مانند <code>[فشار خون بالا](/articles/cardiology/hypertension)</code>.
+      </p>
+
+      <h2>نحوه افزودن مقاله جدید</h2>
       <ol>
-        <li>Create a new <code>.md</code> or <code>.mdx</code> file under the appropriate category folder.</li>
-        <li>Add frontmatter with <code>title</code>, <code>description</code> and <code>category</code>.</li>
-        <li>Write the body using Markdown. Link to other articles with their path.</li>
-        <li>Run <code>npm run dev</code> to preview locally, or <code>npm run build</code> to produce a static site in <code>dist/</code>.</li>
+        <li>یک فایل جدید <code>.md</code> یا <code>.mdx</code> زیر پوشه دسته‌بندی مربوطه ایجاد کنید.</li>
+        <li>فرانت‌متر (frontmatter) را با <code>title</code>، <code>description</code> و <code>category</code> اضافه کنید.</li>
+        <li>متن اصلی را با استفاده از Markdown بنویسید. با استفاده از مسیر مقالات دیگر، به آن‌ها لینک دهید.</li>
+        <li>دستور <code>npm run dev</code> را برای پیش‌نمایش محلی یا <code>npm run build</code> را برای تولید سایت استاتیک در پوشه <code>dist/</code> اجرا کنید.</li>
       </ol>
 
-      <h2>Medical disclaimer</h2>
-      <p>
-        Articles on MedWiki are for general education only. They are not a substitute for
-        professional medical advice, diagnosis or treatment. Always seek the advice of a qualified
-        healthcare provider with any questions about a medical condition. Never disregard
-        professional medical advice because of something you read here.
-      </p>
     </main>
   </div>
 </Base>

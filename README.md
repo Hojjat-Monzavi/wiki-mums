@@ -1,4 +1,4 @@
-# MedWiki
+﻿# WikiMUMS
 
 A minimalist, Wikipedia-style medical encyclopedia built with [Astro](https://astro.build) and MDX. Articles are authored in Markdown (`.md`) and organised by their folder path — the first directory becomes the article's category, and the file name becomes the article's slug. Articles are listed in alphabetic path order throughout the site (sidebar, category pages, navigation).
 
@@ -194,7 +194,7 @@ Just drop a Markdown file into a new folder under `src/content/articles/`. Every
 
 ## Medical disclaimer
 
-Articles on MedWiki are for general education only and are not a substitute for professional medical advice, diagnosis or treatment. Always seek the advice of a qualified healthcare provider with any questions about a medical condition.
+Articles on WikiMUMS are for general education only and are not a substitute for professional medical advice, diagnosis or treatment. Always seek the advice of a qualified healthcare provider with any questions about a medical condition.
 
 ## License
 

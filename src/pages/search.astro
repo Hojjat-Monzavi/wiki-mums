@@ -1,4 +1,4 @@
----
+﻿---
 import Base from '../layouts/Base.astro';
 import Sidebar from '../components/Sidebar.astro';
 import { buildSearchIndex } from '../lib/articles';
@@ -10,13 +10,13 @@ import { buildSearchIndex } from '../lib/articles';
 const index = await buildSearchIndex();
 ---
 
-<Base title="Search" description="Search MedWiki articles.">
+<Base title="Search" description="Search WikiMUMS articles.">
   <div class="page">
     <Sidebar />
 
     <main class="main" id="main">
-      <h1 class="page-title">Search</h1>
-      <p class="lead">Find articles by title, synonym, or description.</p>
+      <h1 class="page-title">جست جو</h1>
+      <p class="lead">جستار های آموزشی را بر اساس نام بیماری یا توصیفات آن جست جو کنید</p>
 
       <form class="search-form" style="max-width: 480px; margin: 0 0 1.5rem;" role="search" autocomplete="off">
         <input
@@ -27,7 +27,7 @@ const index = await buildSearchIndex();
           autocomplete="off"
           aria-label="Search query"
         />
-        <button type="submit">Search</button>
+        <button type="submit">جست جو</button>
       </form>
 
       <p id="search-status" class="article-meta" style="margin-bottom: 1rem;"></p>

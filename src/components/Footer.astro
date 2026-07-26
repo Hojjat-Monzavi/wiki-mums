@@ -1,12 +1,12 @@
----
+﻿---
 import { withBase } from '../lib/base';
 
 const year = new Date().getFullYear();
 
 const links = [
-  { label: 'About', href: withBase('/about') },
-  { label: 'Browse', href: withBase('/categories') },
-  { label: 'Search', href: withBase('/search') },
+  { label: 'درباره ما', href: withBase('/about') },
+  { label: 'مشاهده مقالات', href: withBase('/categories') },
+  { label: 'جست و جو', href: withBase('/search') },
 ];
 
 const cats = [
@@ -21,11 +21,10 @@ const cats = [
 <footer class="site-footer">
   <div class="site-footer__inner">
     <div>
-      <h4>MedWiki</h4>
+      <h4>WikiMUMS</h4>
       <p>
-        A free, open-access medical encyclopedia written and maintained for educational use.
-        Articles are organized by specialty and interlinked so you can browse naturally from
-        one topic to the next.
+        یک دانشنامه پزشکی رایگان و با دسترسی آزاد که برای استفاده‌ی آموزشی نوشته و پشتیبانی می‌شود.
+        کاری از دانشگاه علوم پزشکی مشهد
       </p>
       <p style="margin-top:0.5rem;">
         {links.map((l, i) => (
@@ -37,19 +36,16 @@ const cats = [
       </p>
     </div>
     <div>
-      <h4>Categories</h4>
+      <h4>دسته بندی ها</h4>
       <ul>
         {cats.map((c) => (
           <li><a href={withBase(`/categories/${c.slug}`)}>{c.label}</a></li>
         ))}
       </ul>
     </div>
-    <div>
-      <h4>Disclaimer</h4>
-      <p>MedWiki does not provide medical advice. Always consult a qualified healthcare professional.</p>
-    </div>
+
   </div>
   <div class="site-footer__bottom">
-    © {year} MedWiki · Content available for educational use · Built with Astro
+     {year} WikiMUMS
   </div>
 </footer>
