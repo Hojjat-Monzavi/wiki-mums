@@ -1,17 +1,22 @@
 ---
 import { getCollection } from 'astro:content';
+import { withBase } from '../lib/base';
 
 // Pick a deterministic but seemingly-random article on each visit
 // by sending a small redirect script. (Truly random requires JS,
 // which is fine for a wiki.)
 const all = await getCollection('articles');
-const slugs = all.map((a) => `/articles/${a.slug}`);
+// Pre-prefix each article URL with the configured base so the
+// client-side redirect lands on the right path under a sub-path
+// (e.g. GitHub Pages project sites).
+const slugs = all.map((a) => withBase(`/articles/${a.slug}`));
+const homeHref = withBase('/');
 ---
 
-<script is:inline define:vars={{ slugs }}>
+<script is:inline define:vars={{ slugs, homeHref }}>
   (function () {
     const i = Math.floor(Math.random() * slugs.length);
-    window.location.replace(slugs[i] || '/');
+    window.location.replace(slugs[i] || homeHref);
   })();
 </script>
 

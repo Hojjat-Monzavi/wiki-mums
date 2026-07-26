@@ -3,6 +3,7 @@
 // groups them by their first path segment so the sidebar reflects the
 // real content tree, with articles sorted by path (alphabetic).
 import { getArticlesByCategory, humanize } from '../lib/articles';
+import { withBase } from '../lib/base';
 
 interface Props {
   activeCategory?: string;
@@ -17,10 +18,10 @@ const groups = await getArticlesByCategory();
 <aside class="sidebar" aria-label="Site navigation">
   <h3>Navigation</h3>
   <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/categories">All categories</a></li>
-    <li><a href="/random">Random article</a></li>
-    <li><a href="/about">About MedWiki</a></li>
+    <li><a href={withBase('/')}>Home</a></li>
+    <li><a href={withBase('/categories')}>All categories</a></li>
+    <li><a href={withBase('/random')}>Random article</a></li>
+    <li><a href={withBase('/about')}>About MedWiki</a></li>
   </ul>
 
   <h3>Categories</h3>
@@ -28,7 +29,7 @@ const groups = await getArticlesByCategory();
     {[...groups.keys()].sort().map((slug) => (
       <li>
         <a
-          href={`/categories/${slug}`}
+          href={withBase(`/categories/${slug}`)}
           class={activeCategory === slug ? 'active' : ''}
         >{humanize(slug)}</a>
       </li>
@@ -42,7 +43,7 @@ const groups = await getArticlesByCategory();
         {groups.get(activeCategory)!.map((entry) => (
           <li>
             <a
-              href={`/articles/${entry.slug}`}
+              href={withBase(`/articles/${entry.slug}`)}
               class={activePath === entry.slug ? 'active' : ''}
             >{entry.data.title}</a>
           </li>

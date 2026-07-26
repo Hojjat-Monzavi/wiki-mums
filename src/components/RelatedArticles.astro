@@ -2,6 +2,7 @@
 // Renders a "See also" grid of related articles with cover thumbnails.
 // Replaces plain-text markdown See also sections with a visual card grid.
 import { getArticlesByPaths, coverFor, type ArticleEntry } from '../lib/articles';
+import { withBase } from '../lib/base';
 
 interface Props {
   paths: string[];
@@ -17,7 +18,7 @@ const entries: ArticleEntry[] = await getArticlesByPaths(paths);
     <h2>{title}</h2>
     <div class="see-also__grid">
       {entries.map((entry) => (
-        <a class="see-also__card" href={`/articles/${entry.slug}`}>
+        <a class="see-also__card" href={withBase(`/articles/${entry.slug}`)}>
           <div class="see-also__thumb">
             <img src={coverFor(entry)} alt="" loading="lazy" />
           </div>

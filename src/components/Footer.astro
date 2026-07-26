@@ -1,5 +1,21 @@
 ---
+import { withBase } from '../lib/base';
+
 const year = new Date().getFullYear();
+
+const links = [
+  { label: 'About', href: withBase('/about') },
+  { label: 'Browse', href: withBase('/categories') },
+  { label: 'Search', href: withBase('/search') },
+];
+
+const cats = [
+  { label: 'Cardiology', slug: 'cardiology' },
+  { label: 'Neurology', slug: 'neurology' },
+  { label: 'Respiratory', slug: 'respiratory' },
+  { label: 'Endocrinology', slug: 'endocrinology' },
+  { label: 'Gastroenterology', slug: 'gastroenterology' },
+];
 ---
 
 <footer class="site-footer">
@@ -12,17 +28,20 @@ const year = new Date().getFullYear();
         one topic to the next.
       </p>
       <p style="margin-top:0.5rem;">
-        <a href="/about">About</a> · <a href="/categories">Browse</a> · <a href="/search">Search</a>
+        {links.map((l, i) => (
+          <Fragment>
+            {i > 0 && ' · '}
+            <a href={l.href}>{l.label}</a>
+          </Fragment>
+        ))}
       </p>
     </div>
     <div>
       <h4>Categories</h4>
       <ul>
-        <li><a href="/categories/cardiology">Cardiology</a></li>
-        <li><a href="/categories/neurology">Neurology</a></li>
-        <li><a href="/categories/respiratory">Respiratory</a></li>
-        <li><a href="/categories/endocrinology">Endocrinology</a></li>
-        <li><a href="/categories/gastroenterology">Gastroenterology</a></li>
+        {cats.map((c) => (
+          <li><a href={withBase(`/categories/${c.slug}`)}>{c.label}</a></li>
+        ))}
       </ul>
     </div>
     <div>

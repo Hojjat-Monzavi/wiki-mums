@@ -1,16 +1,18 @@
 ---
+import { withBase } from '../lib/base';
+
 const nav = [
-  { label: 'Home', href: '/' },
-  { label: 'Categories', href: '/categories' },
-  { label: 'Random', href: '/random' },
-  { label: 'About', href: '/about' },
+  { label: 'Home', href: withBase('/') },
+  { label: 'Categories', href: withBase('/categories') },
+  { label: 'Random', href: withBase('/random') },
+  { label: 'About', href: withBase('/about') },
 ];
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a href="/" class="brand" aria-label="MedWiki home">
-      <img src="/favicon.svg" alt="" class="brand__logo" width="28" height="28" />
+    <a href={withBase('/')} class="brand" aria-label="MedWiki home">
+      <img src={withBase('/favicon.svg')} alt="" class="brand__logo" width="28" height="28" />
       <span class="brand__name">
         MedWiki
         <small>The free medical encyclopedia</small>
@@ -18,7 +20,7 @@ const nav = [
     </a>
 
     <div class="search-wrap">
-      <form class="search-form" action="/search" method="get" role="search" autocomplete="off">
+      <form class="search-form" action={withBase('/search')} method="get" role="search" autocomplete="off">
         <input
           type="search"
           name="q"
@@ -48,33 +50,39 @@ const nav = [
   </div>
 </header>
 
-<script>
+<script is:inline define:vars={{ baseUrl: import.meta.env.BASE_URL || '/' }}>
   // --------------------------------------------------------------------
   // Header search — fully client-side.
-  // The index is fetched once from /search-index.json on first focus,
-  // then filtered locally for every keystroke. A small dropdown shows
-  // the top 6 matches with thumbnails; Enter jumps to /search?q=...
-  // for the full results page.
+  // The index is fetched once from <baseUrl>search-index.json on first
+  // focus, then filtered locally for every keystroke. A small dropdown
+  // shows the top 6 matches with thumbnails; Enter jumps to
+  // <baseUrl>search?q=... for the full results page.
   // --------------------------------------------------------------------
   (function () {
-    const input = document.getElementById('header-search') as HTMLInputElement | null;
+    // Normalize: always end with exactly one slash. Astro may give us
+    // '/wiki-mums' (no trailing slash) or '/' — handle both.
+    var normalizedBase = (baseUrl || '/').replace(/\/+$/, '') + '/';
+
+    function withBase(p) {
+      if (!p) return normalizedBase.replace(/\/$/, '') || '/';
+      if (p.startsWith('#') || p.startsWith('?')) return p;
+      if (/^[a-z]+:/i.test(p)) return p;
+      if (baseUrl !== '/' && p.startsWith(normalizedBase)) return p;
+      if (p === '/') return normalizedBase.replace(/\/$/, '') || '/';
+      var stripped = p.replace(/^\/+/, '');
+      return normalizedBase + stripped;
+    }
+    const input = document.getElementById('header-search');
     const dropdown = document.getElementById('search-dropdown');
     if (!input || !dropdown) return;
 
-    let index: Array<{
-      href: string;
-      title: string;
-      description: string;
-      category: string;
-      synonyms: string[];
-      cover: string;
-    }> | null = null;
-    let loadingPromise: Promise<typeof index> | null = null;
+    let index = null;
+    let loadingPromise = null;
 
     function loadIndex() {
       if (index) return Promise.resolve(index);
       if (loadingPromise) return loadingPromise;
-      loadingPromise = fetch('/search-index.json')
+      loadingPromise = fetch(withBase('/search-index.json'))
         .then((r) => r.json())
         .then((data) => {
           index = data;
@@ -87,20 +95,20 @@ const nav = [
       return loadingPromise;
     }
 
-    function escapeHtml(s: string) {
+    function escapeHtml(s) {
       return s.replace(/[&<>"']/g, (c) =>
         ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
       );
     }
 
-    function highlight(text: string, q: string) {
+    function highlight(text, q) {
       if (!q) return escapeHtml(text);
       const safe = escapeHtml(text);
       const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
       return safe.replace(re, '<mark>$1</mark>');
     }
 
-    function score(item: { title: string; synonyms: string[] }, q: string) {
+    function score(item, q) {
       const t = item.title.toLowerCase();
       // Title-prefix beats title-contains beats synonym match.
       if (t.startsWith(q)) return 100 - t.length;
@@ -109,7 +117,7 @@ const nav = [
       return 10;
     }
 
-    function render(q: string, idx: NonNullable<typeof index>) {
+    function render(q, idx) {
       const trimmed = q.trim().toLowerCase();
       if (!trimmed) {
         dropdown.hidden = true;
@@ -134,7 +142,7 @@ const nav = [
           '<div class="search-dropdown__empty">No matches for “' +
           escapeHtml(q) +
           '”</div>' +
-          '<a class="search-dropdown__all" href="/search?q=' +
+          '<a class="search-dropdown__all" href="' + withBase('/search') + '?q=' +
           encodeURIComponent(q) +
           '">Full search →</a>';
         dropdown.hidden = false;
@@ -165,7 +173,7 @@ const nav = [
               '</div></a>'
           )
           .join('') +
-        '<a class="search-dropdown__all" href="/search?q=' +
+        '<a class="search-dropdown__all" href="' + withBase('/search') + '?q=' +
         encodeURIComponent(q) +
         '">All results for “' +
         escapeHtml(q) +
@@ -175,7 +183,7 @@ const nav = [
       input.setAttribute('aria-expanded', 'true');
     }
 
-    let debounceId: number | undefined;
+    let debounceId;
     input.addEventListener('input', () => {
       const v = input.value;
       window.clearTimeout(debounceId);
@@ -191,7 +199,7 @@ const nav = [
     document.addEventListener('click', (e) => {
       // Close dropdown when clicking outside the search wrap.
       const wrap = input.closest('.search-wrap');
-      if (wrap && !wrap.contains(e.target as Node)) {
+      if (wrap && !wrap.contains(e.target)) {
         dropdown.hidden = true;
         input.setAttribute('aria-expanded', 'false');
       }

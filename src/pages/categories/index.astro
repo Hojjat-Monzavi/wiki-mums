@@ -6,6 +6,7 @@ import {
   humanize,
   CATEGORY_DESCRIPTIONS,
 } from '../../lib/articles';
+import { withBase } from '../../lib/base';
 
 const groups = await getArticlesByCategory();
 const sortedSlugs = [...groups.keys()].sort();
@@ -34,7 +35,7 @@ const totalArticles = [...groups.values()].reduce((n, g) => n + g.length, 0);
             <article class="category-card--large">
               <div class="category-card--large__header">
                 <h2 class="category-card--large__title">
-                  <a href={`/categories/${slug}`}>{humanize(slug)}</a>
+                  <a href={withBase(`/categories/${slug}`)}>{humanize(slug)}</a>
                 </h2>
                 <span class="category-card--large__count">{items.length} articles</span>
               </div>
@@ -43,11 +44,11 @@ const totalArticles = [...groups.values()].reduce((n, g) => n + g.length, 0);
               </p>
               <ul class="category-card--large__preview">
                 {preview.map((entry) => (
-                  <li><a href={`/articles/${entry.slug}`}>{entry.data.title}</a></li>
+                  <li><a href={withBase(`/articles/${entry.slug}`)}>{entry.data.title}</a></li>
                 ))}
               </ul>
               {extra > 0 && (
-                <a class="category-card--large__more" href={`/categories/${slug}`}>
+                <a class="category-card--large__more" href={withBase(`/categories/${slug}`)}>
                   + {extra} more article{extra === 1 ? '' : 's'} →
                 </a>
               )}

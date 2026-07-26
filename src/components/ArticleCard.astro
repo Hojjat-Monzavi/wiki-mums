@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { coverFor } from '../lib/articles';
+import { withBase } from '../lib/base';
 
 interface Props {
   entry: CollectionEntry<'articles'>;
@@ -15,16 +16,17 @@ const dateStr = lastUpdated
   ? lastUpdated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
   : null;
 const thumb = coverFor(entry);
+const articleHref = withBase(`/articles/${entry.slug}`);
 ---
 
 <li class={showThumb ? 'article-list__item article-list__item--thumb' : 'article-list__item'}>
   {showThumb && (
-    <a class="article-list__thumb" href={`/articles/${entry.slug}`} aria-hidden="true" tabindex="-1">
+    <a class="article-list__thumb" href={articleHref} aria-hidden="true" tabindex="-1">
       <img src={thumb} alt="" loading="lazy" />
     </a>
   )}
   <div class="article-list__body">
-    <h3><a href={`/articles/${entry.slug}`}>{title}</a></h3>
+    <h3><a href={articleHref}>{title}</a></h3>
     <p>{excerpt || description}</p>
     <p class="meta">📂 {category}{dateStr ? ` · updated ${dateStr}` : ''}</p>
   </div>

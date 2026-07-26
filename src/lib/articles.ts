@@ -5,10 +5,12 @@
 // stays in one place.
 
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { withBase } from './base';
 
 export type ArticleEntry = CollectionEntry<'articles'>;
 
-export const PLACEHOLDER_IMAGE = '/images/article-placeholder.svg';
+// Public asset — must be prefixed with the configured `base` URL.
+export const PLACEHOLDER_IMAGE = withBase('/images/article-placeholder.svg');
 
 /** Humanize a slug like "cardiology" → "Cardiology". */
 export function humanize(slug: string): string {
@@ -61,7 +63,9 @@ export async function getArticlesByPaths(
 
 /** Cover image path, falling back to the placeholder. */
 export function coverFor(entry: ArticleEntry): string {
-  return entry.data.cover ?? PLACEHOLDER_IMAGE;
+  // Frontmatter `cover` is a raw root-relative path; prefix it with the
+  // configured base so it resolves correctly under a sub-path deployment.
+  return entry.data.cover ? withBase(entry.data.cover) : PLACEHOLDER_IMAGE;
 }
 
 /** Default category descriptions for the UI. */
@@ -86,7 +90,7 @@ export interface SearchIndexEntry {
 export async function buildSearchIndex(): Promise<SearchIndexEntry[]> {
   const all = await getAllArticles();
   return all.map((entry) => ({
-    href: `/articles/${entry.slug}`,
+    href: withBase(`/articles/${entry.slug}`),
     title: entry.data.title,
     description: entry.data.description,
     category: entry.data.category,

@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/base';
+
 interface Crumb {
   label: string;
   href?: string;
@@ -9,15 +11,21 @@ interface Props {
 }
 
 const { items } = Astro.props;
+// Prefix every internal href with the configured base URL so callers
+// can keep passing clean root-relative paths like `/categories`.
+const prefixed: Crumb[] = items.map((c) => {
+  if (!c.href) return c;
+  return { ...c, href: withBase(c.href) };
+});
 ---
 
-{items.length > 0 && (
+{prefixed.length > 0 && (
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    {items.map((c, i) => (
-      <>
+    {prefixed.map((c, i) => (
+      <Fragment>
         {i > 0 && <span>›</span>}
         {c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>}
-      </>
+      </Fragment>
     ))}
   </nav>
 )}

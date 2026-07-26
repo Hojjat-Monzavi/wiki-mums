@@ -8,6 +8,7 @@ import {
   humanize,
   CATEGORY_DESCRIPTIONS,
 } from '../../lib/articles';
+import { withBase } from '../../lib/base';
 
 export async function getStaticPaths() {
   const all = await getAllArticles();
@@ -23,7 +24,8 @@ const articles = (await getAllArticles()).filter(
 );
 
 if (articles.length === 0) {
-  return Astro.redirect('/404');
+  // Astro.redirect must also produce a base-prefixed URL.
+  return Astro.redirect(withBase('/404'));
 }
 
 const description =

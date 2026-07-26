@@ -5,6 +5,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import RelatedArticles from '../components/RelatedArticles.astro';
 import { coverFor, type ArticleEntry } from '../lib/articles';
+import { withBase } from '../lib/base';
 
 interface Props {
   entry: ArticleEntry;
@@ -27,6 +28,7 @@ const tocHeadings = (headings ?? [])
   .map((h) => ({ depth: h.depth, text: h.text, slug: h.slug }));
 
 const heroImage = coverFor(entry);
+const categoryHref = withBase(`/categories/${category.slug}`);
 ---
 
 <Base title={title} description={description}>
@@ -49,7 +51,7 @@ const heroImage = coverFor(entry);
           </p>
         )}
         <p class="article-meta">
-          <span>📂 <a href={`/categories/${category.slug}`}>{category.name}</a></span>
+          <span>📂 <a href={categoryHref}>{category.name}</a></span>
           {updatedDate && <span>· Updated {updatedDate}</span>}
         </p>
       </header>

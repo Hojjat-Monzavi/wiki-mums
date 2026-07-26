@@ -8,6 +8,7 @@ import {
   humanize,
   CATEGORY_DESCRIPTIONS,
 } from '../lib/articles';
+import { withBase } from '../lib/base';
 
 const all = await getAllArticles();
 const groups = await getArticlesByCategory();
@@ -37,7 +38,7 @@ const recent = [...all].reverse().slice(0, 5);
       <h2>Browse by category</h2>
       <div class="category-grid">
         {[...groups.keys()].sort().map((slug) => (
-          <a class="category-card" href={`/categories/${slug}`}>
+          <a class="category-card" href={withBase(`/categories/${slug}`)}>
             <h3>{humanize(slug)}</h3>
             <p>{CATEGORY_DESCRIPTIONS[slug] ?? 'Articles in this specialty.'}</p>
             <small>{groups.get(slug)!.length} articles</small>
