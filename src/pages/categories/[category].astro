@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import {
+  getAllArticles,
+  humanize,
+  CATEGORY_DESCRIPTIONS,
+} from '../../lib/articles';
+
+export async function getStaticPaths() {
+  const all = await getAllArticles();
+  const slugs = new Set(all.map((a) => a.slug.split('/')[0]));
+  return [...slugs].map((slug) => ({ params: { category: slug } }));
+}
+
+const { category } = Astro.params;
+const categoryName = humanize(category!);
+
+const articles = (await getAllArticles()).filter(
+  (a) => a.slug.split('/')[0] === category
+);
+
+if (articles.length === 0) {
+  return Astro.redirect('/404');
+}
+
+const description =
+  CATEGORY_DESCRIPTIONS[category!] ?? 'Articles in this specialty.';
+---
+
+<Base title={categoryName} description={description}>
+  <div class="page">
+    <Sidebar activeCategory={category!} />
+
+    <main class="main" id="main">
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Categories', href: '/categories' },
+        { label: categoryName },
+      ]} />
+
+      <h1 class="page-title">{categoryName}</h1>
+      <p class="lead">{description}</p>
+
+      <h2>Articles ({articles.length})</h2>
+      <ul class="article-list">
+        {articles.map((entry) => <ArticleCard entry={entry} />)}
+      </ul>
+    </main>
+  </div>
+</Base>

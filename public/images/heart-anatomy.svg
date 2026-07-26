@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Diagram of the human heart">
+  <rect width="480" height="360" fill="#fefefe"/>
+  <!-- Title -->
+  <text x="240" y="28" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#202122" font-weight="600">Anatomy of the human heart</text>
+
+  <!-- Pericardium outline (subtle) -->
+  <path d="M150 70 C180 50, 250 50, 290 70 C320 90, 330 130, 320 180 C310 240, 270 290, 220 310 C170 290, 140 240, 130 180 C120 130, 130 90, 150 70 Z"
+        fill="#fce8e8" stroke="#a2a9b1" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Right atrium -->
+  <path d="M180 95 C170 110, 165 140, 175 165 C190 170, 210 168, 220 160 C222 140, 218 115, 205 100 C198 95, 188 93, 180 95 Z"
+        fill="#f4b8b8" stroke="#7a1f1f" stroke-width="1.5"/>
+  <!-- Right ventricle -->
+  <path d="M180 165 C175 200, 175 240, 200 270 C220 280, 240 275, 250 260 C255 230, 252 200, 245 180 C230 170, 205 168, 180 165 Z"
+        fill="#e89090" stroke="#7a1f1f" stroke-width="1.5"/>
+  <!-- Left atrium -->
+  <path d="M260 100 C252 110, 248 135, 252 158 C265 165, 285 165, 295 158 C302 138, 298 115, 285 102 C278 97, 268 96, 260 100 Z"
+        fill="#f4b8b8" stroke="#5a0e0e" stroke-width="1.5"/>
+  <!-- Left ventricle (more muscular, darker) -->
+  <path d="M255 165 C250 200, 252 245, 275 275 C295 285, 320 280, 330 260 C335 225, 332 195, 322 175 C305 165, 280 165, 255 165 Z"
+        fill="#c95151" stroke="#5a0e0e" stroke-width="1.5"/>
+
+  <!-- Septum -->
+  <path d="M235 105 C230 145, 232 200, 240 260" stroke="#5a0e0e" stroke-width="1.5" fill="none" stroke-dasharray="2 2"/>
+
+  <!-- Superior vena cava -->
+  <path d="M200 35 L200 95" stroke="#3a5a8c" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- Inferior vena cava -->
+  <path d="M210 270 L210 320" stroke="#3a5a8c" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- Pulmonary trunk -->
+  <path d="M265 95 C268 75, 275 60, 285 50" stroke="#5a8cb8" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- Pulmonary veins -->
+  <path d="M310 90 L290 110" stroke="#5a8cb8" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M325 110 L300 125" stroke="#5a8cb8" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Aorta arch -->
+  <path d="M295 100 C320 80, 345 85, 350 115 C350 135, 340 155, 335 175" stroke="#b8473f" stroke-width="9" fill="none" stroke-linecap="round"/>
+
+  <!-- Coronary arteries on left ventricle -->
+  <path d="M270 180 C280 200, 285 220, 280 250" stroke="#d44545" stroke-width="2" fill="none"/>
+  <path d="M270 180 C265 210, 268 240, 275 265" stroke="#d44545" stroke-width="2" fill="none"/>
+
+  <!-- Labels -->
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#202122">
+    <line x1="200" y1="35" x2="120" y2="55" stroke="#54595d" stroke-width="0.75"/>
+    <text x="115" y="58" text-anchor="end">Superior vena cava</text>
+
+    <line x1="210" y1="310" x2="120" y2="335" stroke="#54595d" stroke-width="0.75"/>
+    <text x="115" y="338" text-anchor="end">Inferior vena cava</text>
+
+    <line x1="185" y1="125" x2="80" y2="115" stroke="#54595d" stroke-width="0.75"/>
+    <text x="75" y="118" text-anchor="end">Right atrium</text>
+
+    <line x1="200" y1="220" x2="80" y2="215" stroke="#54595d" stroke-width="0.75"/>
+    <text x="75" y="218" text-anchor="end">Right ventricle</text>
+
+    <line x1="280" y1="125" x2="400" y2="115" stroke="#54595d" stroke-width="0.75"/>
+    <text x="405" y="118">Left atrium</text>
+
+    <line x1="295" y1="220" x2="400" y2="215" stroke="#54595d" stroke-width="0.75"/>
+    <text x="405" y="218">Left ventricle</text>
+
+    <line x1="285" y1="55" x2="380" y2="45" stroke="#54595d" stroke-width="0.75"/>
+    <text x="385" y="48">Pulmonary trunk</text>
+
+    <line x1="345" y1="105" x2="420" y2="80" stroke="#54595d" stroke-width="0.75"/>
+    <text x="425" y="83">Aorta</text>
+
+    <line x1="278" y1="220" x2="370" y2="275" stroke="#54595d" stroke-width="0.75"/>
+    <text x="375" y="278">Coronary artery</text>
+
+    <text x="240" y="345" text-anchor="middle" font-size="10" fill="#54595d" font-style="italic">Schematic — not to scale</text>
+  </g>
+</svg>

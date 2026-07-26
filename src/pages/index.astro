@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import {
+  getAllArticles,
+  getArticlesByCategory,
+  humanize,
+  CATEGORY_DESCRIPTIONS,
+} from '../lib/articles';
+
+const all = await getAllArticles();
+const groups = await getArticlesByCategory();
+
+const totalArticles = all.length;
+const totalCategories = groups.size;
+
+// "Featured" — pick the article with a cover image if any, else the first.
+const featured = all.find((a) => a.data.cover) ?? all[0];
+
+// "Recently added" — last 5 articles by sort order
+const recent = [...all].reverse().slice(0, 5);
+---
+
+<Base title="MedWiki" description="A free, open-access medical encyclopedia.">
+  <div class="page">
+    <Sidebar />
+
+    <main class="main" id="main">
+      <h1 class="page-title">Welcome to MedWiki</h1>
+      <p class="lead">
+        A free, open-access medical encyclopedia. Browse {totalArticles} articles across
+        {totalCategories} specialties — written in plain language and interlinked so you can
+        explore one topic at a time, the way you would on Wikipedia.
+      </p>
+
+      <h2>Browse by category</h2>
+      <div class="category-grid">
+        {[...groups.keys()].sort().map((slug) => (
+          <a class="category-card" href={`/categories/${slug}`}>
+            <h3>{humanize(slug)}</h3>
+            <p>{CATEGORY_DESCRIPTIONS[slug] ?? 'Articles in this specialty.'}</p>
+            <small>{groups.get(slug)!.length} articles</small>
+          </a>
+        ))}
+      </div>
+
+      <h2>Recently added</h2>
+      <ul class="article-list">
+        {recent.map((entry) => <ArticleCard entry={entry} />)}
+      </ul>
+
+      <h2>Featured article</h2>
+      {featured && (
+        <ul class="article-list">
+          <ArticleCard entry={featured} />
+        </ul>
+      )}
+    </main>
+  </div>
+</Base>

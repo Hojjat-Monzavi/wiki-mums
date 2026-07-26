@@ -1,0 +1,30 @@
+---
+interface Heading {
+  depth: number;
+  text: string;
+  slug: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const hasToc = headings && headings.length > 1;
+---
+
+{hasToc && (
+  <aside class="toc" aria-label="Table of contents">
+    <h3>Contents</h3>
+    <ul>
+      {headings.map((h) => (
+        <li>
+          <a
+            href={`#${h.slug}`}
+            class={h.depth === 3 ? 'level-3' : ''}
+          >{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </aside>
+)}

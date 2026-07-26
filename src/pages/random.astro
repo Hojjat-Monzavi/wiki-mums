@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+
+// Pick a deterministic but seemingly-random article on each visit
+// by sending a small redirect script. (Truly random requires JS,
+// which is fine for a wiki.)
+const all = await getCollection('articles');
+const slugs = all.map((a) => `/articles/${a.slug}`);
+---
+
+<script is:inline define:vars={{ slugs }}>
+  (function () {
+    const i = Math.floor(Math.random() * slugs.length);
+    window.location.replace(slugs[i] || '/');
+  })();
+</script>
+
+<title>Random article…</title>
+<p style="font-family: sans-serif; padding: 2rem;">Picking a random article…</p>

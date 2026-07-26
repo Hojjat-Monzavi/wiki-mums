@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<Base title="About" description="About MedWiki.">
+  <div class="page">
+    <Sidebar />
+
+    <main class="main" id="main">
+      <h1 class="page-title">About MedWiki</h1>
+
+      <p class="lead">
+        MedWiki is a free, open-access medical encyclopedia written in plain language for
+        patients, students and curious readers.
+      </p>
+
+      <h2>What this is</h2>
+      <p>
+        MedWiki is a small, static, encyclopedia-style website — modelled after Wikipedia in
+        spirit but focused exclusively on medicine. Every article lives at a stable URL based on
+        its file path, so linking between articles is predictable and durable. Articles are
+        grouped into medical specialties (Cardiology, Neurology, Respiratory, Endocrinology,
+        Gastroenterology) and the entire site is generated from Markdown and MDX files.
+      </p>
+      <p>
+        The project is intentionally minimalist. There is no JavaScript framework on the client,
+        no tracking, no comments and no advertisements. Pages render as plain HTML and CSS, with
+        one tiny inline script that powers the live search box.
+      </p>
+
+      <h2>How articles are organized</h2>
+      <p>
+        Articles live under <code>src/content/articles/&lt;category&gt;/&lt;article-slug&gt;.md</code>.
+        The first directory segment becomes the article's category; the file name becomes the
+        article's slug. The URL is simply <code>/articles/&lt;category&gt;/&lt;article-slug&gt;</code>,
+        and articles within each category are listed in alphabetic path order — the same order
+        they appear in the sidebar.
+      </p>
+      <p>
+        Each article's frontmatter declares its <code>title</code>, <code>description</code>,
+        <code>category</code>, optional <code>synonyms</code>, <code>lastUpdated</code> date and
+        optional <code>references</code>. Internal links use standard Markdown link syntax pointing
+        at the article's path, e.g. <code>[hypertension](/articles/cardiology/hypertension)</code>.
+      </p>
+
+      <h2>How to add an article</h2>
+      <ol>
+        <li>Create a new <code>.md</code> or <code>.mdx</code> file under the appropriate category folder.</li>
+        <li>Add frontmatter with <code>title</code>, <code>description</code> and <code>category</code>.</li>
+        <li>Write the body using Markdown. Link to other articles with their path.</li>
+        <li>Run <code>npm run dev</code> to preview locally, or <code>npm run build</code> to produce a static site in <code>dist/</code>.</li>
+      </ol>
+
+      <h2>Medical disclaimer</h2>
+      <p>
+        Articles on MedWiki are for general education only. They are not a substitute for
+        professional medical advice, diagnosis or treatment. Always seek the advice of a qualified
+        healthcare provider with any questions about a medical condition. Never disregard
+        professional medical advice because of something you read here.
+      </p>
+    </main>
+  </div>
+</Base>

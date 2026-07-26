@@ -1,0 +1,36 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <h4>MedWiki</h4>
+      <p>
+        A free, open-access medical encyclopedia written and maintained for educational use.
+        Articles are organized by specialty and interlinked so you can browse naturally from
+        one topic to the next.
+      </p>
+      <p style="margin-top:0.5rem;">
+        <a href="/about">About</a> · <a href="/categories">Browse</a> · <a href="/search">Search</a>
+      </p>
+    </div>
+    <div>
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="/categories/cardiology">Cardiology</a></li>
+        <li><a href="/categories/neurology">Neurology</a></li>
+        <li><a href="/categories/respiratory">Respiratory</a></li>
+        <li><a href="/categories/endocrinology">Endocrinology</a></li>
+        <li><a href="/categories/gastroenterology">Gastroenterology</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Disclaimer</h4>
+      <p>MedWiki does not provide medical advice. Always consult a qualified healthcare professional.</p>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    © {year} MedWiki · Content available for educational use · Built with Astro
+  </div>
+</footer>

@@ -1,0 +1,37 @@
+---
+import Article from '../../layouts/Article.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const all = await getCollection('articles');
+  return all.map((entry) => ({
+    params: { slug: entry.slug }, // full path, e.g. "cardiology/hypertension" (no extension)
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const humanize = (s: string) =>
+  s.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+// entry.slug is "cardiology/hypertension" — first segment is the category
+const categorySlug = entry.slug.split('/')[0];
+const categoryName = humanize(categorySlug);
+
+const descriptions: Record<string, string> = {
+  cardiology: 'Heart and blood vessel disorders.',
+  neurology: 'Disorders of the brain, spinal cord and nerves.',
+  respiratory: 'Diseases of the lungs and airways.',
+  endocrinology: 'Hormonal and metabolic conditions.',
+  gastroenterology: 'Digestive system and liver diseases.',
+};
+
+const category = {
+  name: categoryName,
+  slug: categorySlug,
+  description: descriptions[categorySlug] ?? 'Articles in this specialty.',
+};
+---
+
+<Article entry={entry} category={category} />

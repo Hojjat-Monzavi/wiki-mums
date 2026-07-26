@@ -1,0 +1,33 @@
+---
+// Renders a "See also" grid of related articles with cover thumbnails.
+// Replaces plain-text markdown See also sections with a visual card grid.
+import { getArticlesByPaths, coverFor, type ArticleEntry } from '../lib/articles';
+
+interface Props {
+  paths: string[];
+  title?: string;
+}
+
+const { paths, title = 'See also' } = Astro.props;
+const entries: ArticleEntry[] = await getArticlesByPaths(paths);
+---
+
+{entries.length > 0 && (
+  <section class="see-also">
+    <h2>{title}</h2>
+    <div class="see-also__grid">
+      {entries.map((entry) => (
+        <a class="see-also__card" href={`/articles/${entry.slug}`}>
+          <div class="see-also__thumb">
+            <img src={coverFor(entry)} alt="" loading="lazy" />
+          </div>
+          <div class="see-also__body">
+            <h3>{entry.data.title}</h3>
+            <p>{entry.data.description}</p>
+            <small>{entry.data.category}</small>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

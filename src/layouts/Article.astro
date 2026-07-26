@@ -1,0 +1,106 @@
+---
+import Base from './Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
+import { coverFor, type ArticleEntry } from '../lib/articles';
+
+interface Props {
+  entry: ArticleEntry;
+  category: { name: string; slug: string; description: string };
+}
+
+const { entry, category } = Astro.props;
+const { title, description, lastUpdated, synonyms, references, cover, seeAlso } = entry.data;
+
+// Render the body once so we can also extract headings for the TOC.
+const { Content, headings } = await entry.render();
+
+const updatedDate = lastUpdated
+  ? lastUpdated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  : null;
+
+// Use the manually-rendered headings for the TOC. Filter to h2/h3 only.
+const tocHeadings = (headings ?? [])
+  .filter((h) => h.depth === 2 || h.depth === 3)
+  .map((h) => ({ depth: h.depth, text: h.text, slug: h.slug }));
+
+const heroImage = coverFor(entry);
+---
+
+<Base title={title} description={description}>
+  <div class="page page--with-toc">
+    <Sidebar activeCategory={category.slug} activePath={entry.slug} />
+
+    <main class="main" id="main">
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Categories', href: '/categories' },
+        { label: category.name, href: `/categories/${category.slug}` },
+        { label: title },
+      ]} />
+
+      <header class="article-header">
+        <h1>{title}</h1>
+        {synonyms && synonyms.length > 0 && (
+          <p class="article-meta">
+            <span>Also known as: <em>{synonyms.join(', ')}</em></span>
+          </p>
+        )}
+        <p class="article-meta">
+          <span>📂 <a href={`/categories/${category.slug}`}>{category.name}</a></span>
+          {updatedDate && <span>· Updated {updatedDate}</span>}
+        </p>
+      </header>
+
+      {cover && (
+        <figure class="article-cover">
+          <img src={heroImage} alt={`Illustration: ${title}`} />
+        </figure>
+      )}
+
+      <div class="disclaimer">
+        <strong>Medical disclaimer:</strong> This article is for educational purposes only and is not
+        a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice
+        of a qualified health provider with any questions about a medical condition.
+      </div>
+
+      <article class="article-body">
+        <Content />
+      </article>
+
+      {seeAlso && seeAlso.length > 0 && (
+        <RelatedArticles paths={seeAlso} />
+      )}
+
+      {references && references.length > 0 && (
+        <section class="references">
+          <h2>References</h2>
+          <ol>
+            {references.map((r) => <li>{r}</li>)}
+          </ol>
+        </section>
+      )}
+    </main>
+
+    <TableOfContents headings={tocHeadings} />
+  </div>
+</Base>
+
+<script>
+  // Toggle mobile sidebar
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+      sidebar.querySelectorAll('h3').forEach((h) => {
+        h.addEventListener('click', () => {
+          if (window.matchMedia('(max-width: 768px)').matches) {
+            const next = h.nextElementSibling as HTMLElement | null;
+            if (next) next.style.display = next.style.display === 'none' ? '' : 'none';
+          }
+        });
+      });
+    }
+  });
+</script>

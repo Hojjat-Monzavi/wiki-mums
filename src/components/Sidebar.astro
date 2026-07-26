@@ -1,0 +1,53 @@
+---
+// Sidebar — navigation by category. Reads the full article index and
+// groups them by their first path segment so the sidebar reflects the
+// real content tree, with articles sorted by path (alphabetic).
+import { getArticlesByCategory, humanize } from '../lib/articles';
+
+interface Props {
+  activeCategory?: string;
+  activePath?: string;
+}
+
+const { activeCategory, activePath } = Astro.props;
+
+const groups = await getArticlesByCategory();
+---
+
+<aside class="sidebar" aria-label="Site navigation">
+  <h3>Navigation</h3>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/categories">All categories</a></li>
+    <li><a href="/random">Random article</a></li>
+    <li><a href="/about">About MedWiki</a></li>
+  </ul>
+
+  <h3>Categories</h3>
+  <ul>
+    {[...groups.keys()].sort().map((slug) => (
+      <li>
+        <a
+          href={`/categories/${slug}`}
+          class={activeCategory === slug ? 'active' : ''}
+        >{humanize(slug)}</a>
+      </li>
+    ))}
+  </ul>
+
+  {activeCategory && groups.has(activeCategory) && (
+    <>
+      <h3>In this category</h3>
+      <ul>
+        {groups.get(activeCategory)!.map((entry) => (
+          <li>
+            <a
+              href={`/articles/${entry.slug}`}
+              class={activePath === entry.slug ? 'active' : ''}
+            >{entry.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</aside>

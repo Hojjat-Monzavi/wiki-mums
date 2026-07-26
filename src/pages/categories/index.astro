@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import {
+  getArticlesByCategory,
+  humanize,
+  CATEGORY_DESCRIPTIONS,
+} from '../../lib/articles';
+
+const groups = await getArticlesByCategory();
+const sortedSlugs = [...groups.keys()].sort();
+
+const totalArticles = [...groups.values()].reduce((n, g) => n + g.length, 0);
+---
+
+<Base title="Categories" description="All categories on MedWiki.">
+  <div class="page">
+    <Sidebar />
+
+    <main class="main" id="main">
+      <h1 class="page-title">All categories</h1>
+      <p class="lead">
+        MedWiki organises {totalArticles} articles across {sortedSlugs.length} medical
+        specialties. Pick a category below to browse its full article list — articles within
+        each category are listed in alphabetic order on the category page.
+      </p>
+
+      <div class="category-grid category-grid--large">
+        {sortedSlugs.map((slug) => {
+          const items = groups.get(slug)!;
+          const preview = items.slice(0, 4);
+          const extra = items.length - preview.length;
+          return (
+            <article class="category-card--large">
+              <div class="category-card--large__header">
+                <h2 class="category-card--large__title">
+                  <a href={`/categories/${slug}`}>{humanize(slug)}</a>
+                </h2>
+                <span class="category-card--large__count">{items.length} articles</span>
+              </div>
+              <p class="category-card--large__desc">
+                {CATEGORY_DESCRIPTIONS[slug] ?? 'Articles in this specialty.'}
+              </p>
+              <ul class="category-card--large__preview">
+                {preview.map((entry) => (
+                  <li><a href={`/articles/${entry.slug}`}>{entry.data.title}</a></li>
+                ))}
+              </ul>
+              {extra > 0 && (
+                <a class="category-card--large__more" href={`/categories/${slug}`}>
+                  + {extra} more article{extra === 1 ? '' : 's'} →
+                </a>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </main>
+  </div>
+</Base>
+
+<style>
+  .category-grid--large {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0 2rem;
+  }
+  @media (max-width: 480px) {
+    .category-grid--large { grid-template-columns: 1fr; }
+  }
+</style>

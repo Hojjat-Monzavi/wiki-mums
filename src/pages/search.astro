@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { buildSearchIndex } from '../lib/articles';
+
+// Build the search index inline on this page so the /search page itself
+// works without an extra fetch (the header search dropdown uses a separate
+// /search-index.json endpoint, but the results page renders fully client-side
+// from the same data shape).
+const index = await buildSearchIndex();
+---
+
+<Base title="Search" description="Search MedWiki articles.">
+  <div class="page">
+    <Sidebar />
+
+    <main class="main" id="main">
+      <h1 class="page-title">Search</h1>
+      <p class="lead">Find articles by title, synonym, or description.</p>
+
+      <form class="search-form" style="max-width: 480px; margin: 0 0 1.5rem;" role="search" autocomplete="off">
+        <input
+          type="search"
+          name="q"
+          id="search-input"
+          placeholder="Type to search…"
+          autocomplete="off"
+          aria-label="Search query"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      <p id="search-status" class="article-meta" style="margin-bottom: 1rem;"></p>
+
+      <ul id="search-results" class="article-list search-results"></ul>
+    </main>
+  </div>
+</Base>
+
+<script is:inline define:vars={{ index }}>
+  (function () {
+    const input = document.getElementById('search-input');
+    const status = document.getElementById('search-status');
+    const results = document.getElementById('search-results');
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
+      );
+    }
+
+    function highlight(text, q) {
+      if (!q) return escapeHtml(text);
+      const safe = escapeHtml(text);
+      const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+      return safe.replace(re, '<mark>$1</mark>');
+    }
+
+    function score(item, q) {
+      const t = item.title.toLowerCase();
+      if (t.startsWith(q)) return 100 - t.length;
+      if (t.includes(q)) return 60 - t.indexOf(q);
+      if ((item.synonyms || []).some((s) => s.toLowerCase().includes(q))) return 30;
+      return 10;
+    }
+
+    function render(q) {
+      q = (q || '').trim().toLowerCase();
+      results.innerHTML = '';
+
+      if (!q) {
+        status.textContent = `Index has ${index.length} articles. Type to begin.`;
+        return;
+      }
+
+      const matches = index
+        .map((item) => ({ item, s: score(item, q) }))
+        .filter((x) =>
+          x.s > 0 ||
+          (x.item.title + ' ' + (x.item.synonyms || []).join(' ') + ' ' + x.item.description)
+            .toLowerCase()
+            .includes(q)
+        )
+        .sort((a, b) => b.s - a.s);
+
+      status.textContent = `${matches.length} result${matches.length === 1 ? '' : 's'} for “${q}”.`;
+
+      if (matches.length === 0) {
+        results.innerHTML = '<li><p>No articles matched your search.</p></li>';
+        return;
+      }
+
+      results.innerHTML = matches
+        .map(
+          ({ item: m }) =>
+            `<li class="article-list__item article-list__item--thumb">` +
+              `<a class="article-list__thumb" href="${m.href}" aria-hidden="true" tabindex="-1">` +
+                `<img src="${m.cover}" alt="" loading="lazy" />` +
+              `</a>` +
+              `<div class="article-list__body">` +
+                `<h3><a href="${m.href}">${highlight(m.title, q)}</a></h3>` +
+                `<p>${highlight(m.description, q)}</p>` +
+                `<p class="meta">📂 ${escapeHtml(m.category)}` +
+                  (m.synonyms && m.synonyms.length
+                    ? ` · also: ${m.synonyms.map((s) => highlight(s, q)).join(', ')}`
+                    : '') +
+                `</p>` +
+              `</div>` +
+            `</li>`
+        )
+        .join('');
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const initialQ = params.get('q') || '';
+    input.value = initialQ;
+    render(initialQ);
+
+    input.addEventListener('input', () => {
+      render(input.value);
+      const u = new URL(window.location.href);
+      if (input.value) u.searchParams.set('q', input.value);
+      else u.searchParams.delete('q');
+      window.history.replaceState({}, '', u);
+    });
+
+    input.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      render(input.value);
+    });
+  })();
+</script>
