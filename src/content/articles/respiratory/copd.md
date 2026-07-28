@@ -15,6 +15,13 @@ seeAlso:
   - /articles/respiratory/apnea
 references:
   - 'Global Initiative for Chronic Obstructive Lung Disease (GOLD). 2024 GOLD Report.'
+credits: 
+  - 'دکتر الناز امینی'
+  - 'طاها صفری پور'
+  - 'حسین عبداللهی'
+  - 'تکتم دهقانی'
+  - 'حجت منزوی'
+  - 'زهرا موفقی'
 ---
 # مقدمه
 

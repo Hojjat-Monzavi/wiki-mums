@@ -34,7 +34,7 @@ medical-wiki/
 ├── package.json
 ├── tsconfig.json
 ├── public/
-│   ├── favicon.svg
+│   ├── favicon.png
 │   └── images/
 │       ├── heart-anatomy.svg       # Cover image used by hypertension.md
 │       └── article-placeholder.svg  # Fallback for articles without a cover

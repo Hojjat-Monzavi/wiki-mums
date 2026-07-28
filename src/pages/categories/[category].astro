@@ -29,7 +29,7 @@ if (articles.length === 0) {
 }
 
 const description =
-  CATEGORY_DESCRIPTIONS[category!] ?? 'Articles in this specialty.';
+  CATEGORY_DESCRIPTIONS[category!] ?? 'جستار های موجود در این دسته بندی';
 ---
 
 <Base title={categoryName} description={description}>
@@ -38,15 +38,15 @@ const description =
 
     <main class="main" id="main">
       <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Categories', href: '/categories' },
+        { label: 'خانه', href: '/' },
+        { label: 'دسته بندی ها', href: '/categories' },
         { label: categoryName },
       ]} />
 
       <h1 class="page-title">{categoryName}</h1>
       <p class="lead">{description}</p>
 
-      <h2>Articles ({articles.length})</h2>
+      <h2>جستار ها ({articles.length})</h2>
       <ul class="article-list">
         {articles.map((entry) => <ArticleCard entry={entry} />)}
       </ul>

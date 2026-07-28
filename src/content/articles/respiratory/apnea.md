@@ -12,6 +12,13 @@ seeAlso:
   - /articles/respiratory/pneumonia
 references:
   - 'Global Initiative for Asthma (GINA). Global Strategy for Asthma Management and Prevention. 2024 update.'
+credits: 
+  - 'دکتر الناز امینی'
+  - 'طاها صفری پور'
+  - 'حسین عبداللهی'
+  - 'تکتم دهقانی'
+  - 'حجت منزوی'
+  - 'زهرا موفقی'
 ---
 
 **مقدمه**

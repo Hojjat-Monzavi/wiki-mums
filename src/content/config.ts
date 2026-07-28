@@ -20,6 +20,7 @@ const articles = defineCollection({
     // When present, rendered as a thumbnail grid at the foot of the article
     // instead of any plain-text "See also" section in the body.
     seeAlso: z.array(z.string()).optional(),
+    credits: z.array(z.string()).optional(),
   }),
 });
 

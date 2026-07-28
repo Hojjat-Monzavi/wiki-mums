@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { entry, category } = Astro.props;
-const { title, description, lastUpdated, synonyms, references, cover, seeAlso } = entry.data;
+const { title, description, lastUpdated, synonyms, references, cover, seeAlso, credits } = entry.data;
 
 // Render the body once so we can also extract headings for the TOC.
 const { Content, headings } = await entry.render();
@@ -78,6 +78,15 @@ const categoryHref = withBase(`/categories/${category.slug}`);
           <ol>
             {references.map((r) => <li>{r}</li>)}
           </ol>
+        </section>
+      )}
+
+      {credits && credits.length > 0 && (
+        <section class="credits">
+          <h2>اعضای تیم تهیه محتوا</h2>
+          <ul>
+            {credits.map((c) => <li>{c}</li>)}
+          </ul>
         </section>
       )}
     </main>
